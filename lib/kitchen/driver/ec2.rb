@@ -59,6 +59,8 @@ module Kitchen
       end
 
       default_config :interface, nil
+      default_config :associate_public_ip, false
+      default_config :iam_instance_profile_name, nil
 
       required_config :aws_access_key_id
       required_config :aws_secret_access_key
@@ -116,14 +118,16 @@ module Kitchen
         debug_server_config
 
         connection.servers.create(
-          :availability_zone  => config[:availability_zone],
-          :security_group_ids => config[:security_group_ids],
-          :tags               => config[:tags],
-          :flavor_id          => config[:flavor_id],
-          :ebs_optimized      => config[:ebs_optimized],
-          :image_id           => config[:image_id],
-          :key_name           => config[:aws_ssh_key_id],
-          :subnet_id          => config[:subnet_id],
+          :availability_zone         => config[:availability_zone],
+          :security_group_ids        => config[:security_group_ids],
+          :tags                      => config[:tags],
+          :flavor_id                 => config[:flavor_id],
+          :ebs_optimized             => config[:ebs_optimized],
+          :image_id                  => config[:image_id],
+          :key_name                  => config[:aws_ssh_key_id],
+          :subnet_id                 => config[:subnet_id],
+          :associate_public_ip       => config[:associate_public_ip],
+          :iam_instance_profile_name => config[:iam_instance_profile_name]
         )
       end
 
@@ -137,6 +141,8 @@ module Kitchen
         debug("ec2:tags '#{config[:tags]}'")
         debug("ec2:key_name '#{config[:aws_ssh_key_id]}'")
         debug("ec2:subnet_id '#{config[:subnet_id]}'")
+        debug("ec2:associate_public_ip '#{config[:associate_public_ip]}'")
+        debug("ec2:iam_instance_profile_name '#{config[:iam_instance_profile_name]}'")
       end
 
       def amis
